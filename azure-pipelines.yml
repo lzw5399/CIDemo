@@ -32,7 +32,7 @@ steps:
     repository: '$(repository)'
     command: 'buildAndPush'
     Dockerfile: 'CIDemo/Dockerfile'
-    buildContext: 'CIDemo/'
+    buildContext: '.'
     tags: '$(Build.BuildNumber)'
 
 - task: SSH@0
