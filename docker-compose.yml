@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  cidemo:
+    image: ${DOCKER_REGISTRY-}cidemo
+    build:
+      context: .
+      dockerfile: CIDemo/Dockerfile
