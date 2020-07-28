@@ -39,5 +39,5 @@ steps:
   inputs:
     sshEndpoint: 'tencent_centos(123.207.67.80)'
     runOptions: 'inline'
-    inline: 'docker run -d -p 8096:80 $(repository):$(Build.BuildNumber)' #lzw5399/cidemo:20200731.1
+    inline: 'docker run -d -p 8081:80 $(repository):$(Build.BuildNumber)' #lzw5399/cidemo:20200731.1
     readyTimeout: '20000'
