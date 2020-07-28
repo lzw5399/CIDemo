@@ -31,7 +31,8 @@ steps:
     containerRegistry: 'cidemo_dockerhub'
     repository: '$(repository)'
     command: 'buildAndPush'
-    Dockerfile: '**/Dockerfile'
+    Dockerfile: 'CIDemo/Dockerfile'
+    buildContext: 'CIDemo/'
     tags: '$(Build.BuildNumber)'
 
 - task: SSH@0
