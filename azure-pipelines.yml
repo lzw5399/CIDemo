@@ -1,0 +1,42 @@
+# ASP.NET
+# Build and test ASP.NET projects.
+# Add steps that publish symbols, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/apps/aspnet/build-aspnet-4
+
+# 代码仓库的哪个分支会触发构建
+trigger:
+- master
+
+# 当前pipeline的环境
+pool:
+  vmImage: 'ubuntu-latest'
+
+# 定义的一些变量，下面的脚本可以使用
+variables:
+  - name: appName
+    value: cidemo
+  
+  - name: repository
+    value: lzw5399/$(appName)
+
+# 具体的流水线的步骤集合
+steps:
+
+# 具体的步骤
+
+# 通过build dockerfile来生成docker的image，并且推送到dockerhub上
+- task: Docker@2
+  displayName: docker build and push
+  inputs:
+    containerRegistry: 'cidemo_dockerhub'
+    repository: '$(repository)'
+    command: 'buildAndPush'
+    Dockerfile: '**/Dockerfile'
+    tags: '$(Build.BuildNumber)'
+
+- task: SSH@0
+  inputs:
+    sshEndpoint: 'tencent_centos(123.207.67.80)'
+    runOptions: 'inline'
+    inline: 'docker run -d -p 8096:80 $(repository):$(Build.BuildNumber)' #lzw5399/cidemo:20200731.1
+    readyTimeout: '20000'
